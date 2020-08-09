@@ -10,6 +10,8 @@ import pandas_market_calendars as mcal
 from datetime import datetime, timedelta
 import random
 
+import data_gatherer
+
 token = "bslf58frh5rb8ivktbpg"
 finnhub_client = finnhub.Client(api_key=token)
 
@@ -73,12 +75,6 @@ def getRandomMonday(minDate,maxDate):
       break
   return randomdate
 
-def getCandles(symbol, fromDate, toDate):
-  try:
-    return pd.DataFrame(finnhub_client.stock_candles(symbol, 'D', int(datetime.timestamp(fromDate)), int(datetime.timestamp(toDate))))
-  except:
-    return None
-
 def getFeatures(symbol, initialRange, finalRange):
   print(symbol)
   (initialDate, finalDate) = getRandomMonth(initialRange, finalRange)
@@ -116,9 +112,6 @@ def getFutureIncrement(symbol, date):
   initial = float(nextDays.iloc[[0]]['o'])
   final = float(nextDays.iloc[[-1]]['c'])
   return ((final - initial) / initial)*100
-
-def getSymbolList():
-  return pd.DataFrame(finnhub_client.stock_symbols(exchange='US'))['symbol']
 
 def obtainData(symbols):
   dataList = list(map(lambda symbol: getFeatures(symbol, minDate, maxDate), symbols))
