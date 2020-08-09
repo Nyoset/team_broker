@@ -4,9 +4,9 @@ from datetime import datetime
 import pandas as pd
 import finnhub
 import time
+from config import *
 
-current_path = dir_path = os.path.dirname(os.path.realpath(__file__))
-data_path = os.path.join(current_path, 'data')
+
 minDate = datetime(2015, 1, 1)
 maxDate = datetime(2020, 6, 1)
 
@@ -25,11 +25,6 @@ def download_data(overwrite=False):
             print("Download of " + symbol + " failed")
             continue
         save(features, symbol)
-
-
-def getFileName(symbol):
-    return os.path.join(data_path, symbol + '.csv')
-
 
 def save(df, name):
     df.to_csv(getFileName(name))
