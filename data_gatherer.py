@@ -20,21 +20,22 @@ def download_data(overwrite=False):
         if os.path.exists(getFileName(symbol)) and not overwrite:
             continue
         print("Downloading " + symbol)
-        features = getCandles(symbol)
+        features = get_candles(symbol)
         if features is None:
             print("Download of " + symbol + " failed")
             continue
         save(features, symbol)
 
+
 def save(df, name):
     df.to_csv(getFileName(name))
 
 
-def getCandles(symbol, fromDate=minDate, toDate=maxDate):
+def get_candles(symbol, from_date=minDate, to_date=maxDate):
     try:
-        response = finnhub_client.stock_candles(symbol, 'D', int(datetime.timestamp(fromDate)),
-                                                int(datetime.timestamp(toDate)))
-        time.sleep(1)
+        response = finnhub_client.stock_candles(symbol, 'D', int(datetime.timestamp(from_date)),
+                                                int(datetime.timestamp(to_date)))
+        time.sleep(0.5)
         return pd.DataFrame(response)
     except finnhub.FinnhubAPIException as err:
         print(err)
@@ -45,7 +46,7 @@ def getCandles(symbol, fromDate=minDate, toDate=maxDate):
         return None
 
 
-def getSymbolList():
+def get_symbol_list():
     return pd.DataFrame(finnhub_client.stock_symbols(exchange='US'))['symbol']
 
 

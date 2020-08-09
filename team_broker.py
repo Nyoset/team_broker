@@ -10,7 +10,7 @@ import pandas_market_calendars as mcal
 from datetime import datetime, timedelta
 import random
 
-import data_gatherer
+from data_gatherer import *
 
 token = "bslf58frh5rb8ivktbpg"
 finnhub_client = finnhub.Client(api_key=token)
@@ -80,7 +80,7 @@ def getFeatures(symbol, initialRange, finalRange):
   (initialDate, finalDate) = getRandomMonth(initialRange, finalRange)
   if initialDate is None or finalDate is None:
     return None
-  data = getCandles(symbol, initialDate, finalDate)
+  data = get_candles(symbol, initialDate, finalDate)
   stockIncrement = getFutureIncrement(symbol, finalDate) 
   if data is None or stockIncrement is None:
     print(symbol + " DISCARDED")
@@ -106,7 +106,7 @@ def getModel():
   return model
 
 def getFutureIncrement(symbol, date):
-  nextDays = getCandles(symbol, date, date + timedelta(days=7))
+  nextDays = get_candles(symbol, date, date + timedelta(days=7))
   if nextDays is None:
     return None
   initial = float(nextDays.iloc[[0]]['o'])
@@ -123,7 +123,7 @@ def obtainData(symbols):
 # Main
 print("Main")
 model = getModel()
-symbols = getSymbolList()
+symbols = get_symbol_list()
 (training, result) = obtainData(random.sample(list(symbols), 200))
 print("Using " + str(training.shape[0]) + " samples with " + str(training.shape[1]) + " data")
 
