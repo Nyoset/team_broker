@@ -15,7 +15,7 @@ finnhub_client = finnhub.Client(api_key=token)
 
 
 def download_data(overwrite=False):
-    symbols = getSymbolList()
+    symbols = get_symbol_list()
     for symbol in symbols:
         if os.path.exists(getFileName(symbol)) and not overwrite:
             continue
