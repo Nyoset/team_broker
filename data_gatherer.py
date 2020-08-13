@@ -9,7 +9,6 @@ from config import *
 
 minDate = datetime(2015, 1, 1)
 maxDate = datetime(2020, 6, 1)
-
 token = "bslf58frh5rb8ivktbpg"
 finnhub_client = finnhub.Client(api_key=token)
 
@@ -17,7 +16,7 @@ finnhub_client = finnhub.Client(api_key=token)
 def download_data(overwrite=False):
     symbols = get_symbol_list()
     for symbol in symbols:
-        if os.path.exists(getFileName(symbol)) and not overwrite:
+        if os.path.exists(get_file_name(symbol)) and not overwrite:
             continue
         print("Downloading " + symbol)
         features = get_candles(symbol)
@@ -28,7 +27,7 @@ def download_data(overwrite=False):
 
 
 def save(df, name):
-    df.to_csv(getFileName(name))
+    df.to_csv(get_file_name(name))
 
 
 def get_candles(symbol, from_date=minDate, to_date=maxDate):
