@@ -114,7 +114,7 @@ def getFutureIncrement(symbol, date):
   return ((final - initial) / initial)*100
 
 def obtainData(symbols):
-  dataList = list(map(lambda symbol: getFeatures(symbol, minDate, maxDate), symbols))
+  dataList = list(map(lambda symbol: getFeatures(symbol, min_date, max_date), symbols))
   filteredData = list(filter(lambda x: x[0].shape == numberOfFeatures, list(filter(None, dataList))))
   symbolData = tf.stack([features[0] for features in filteredData])
   result = tf.stack([features[1] for features in filteredData])

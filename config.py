@@ -1,6 +1,9 @@
 import os
 import pandas as pd
+from datetime import datetime
 
+min_date = datetime(2015, 1, 1)
+max_date = datetime(2020, 6, 1)
 current_path = dir_path = os.path.dirname(os.path.realpath(__file__))
 data_path = os.path.join(current_path, 'data')
 

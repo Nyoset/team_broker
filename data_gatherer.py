@@ -1,14 +1,10 @@
-
 import os
-from datetime import datetime
 import pandas as pd
 import finnhub
 import time
 from config import *
 
 
-minDate = datetime(2015, 1, 1)
-maxDate = datetime(2020, 6, 1)
 token = "bslf58frh5rb8ivktbpg"
 finnhub_client = finnhub.Client(api_key=token)
 
@@ -30,7 +26,7 @@ def save(df, name):
     df.to_csv(get_file_name(name))
 
 
-def get_candles(symbol, from_date=minDate, to_date=maxDate):
+def get_candles(symbol, from_date=min_date, to_date=max_date):
     try:
         response = finnhub_client.stock_candles(symbol, 'D', int(datetime.timestamp(from_date)),
                                                 int(datetime.timestamp(to_date)))
